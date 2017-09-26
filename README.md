@@ -4,19 +4,19 @@ ec2-search can search for EC2 instance, and it can cross accounts.
 ## Example
 
 AWS Account: hoge  
-|tag:Name|instance id|private ip|public ip|
+|tagName|instance id|private ip|public ip|
 |---|---|---|---|
 |hoge-instance1|i-hogexxx|10.0.0.0|11.22.33.44|
 |hoge-instance2|i-hogeyyy|10.0.0.1|22.33.44.55|
 
 AWS Account: fuga
-|tag:Name|instance id|private ip|public ip|
+|tagName|instance id|private ip|public ip|
 |---|---|---|---|
 |fuga-instance1|i-fugaxxx|10.0.0.2|33.44.55.66|
 |fuga-instance2|i-fugayyy|10.0.0.3|44.55.66.77|
 
 AWS Account: puyo
-|tag:Name|instance id|private ip|public ip|
+|tagName|instance id|private ip|public ip|
 |---|---|---|---|
 |puyo-instance1|i-puyoxxx|10.0.0.4|55.66.77.88|
 |puyo-instance2|i-puyoyyy|10.0.0.5|66.77.88.99|
