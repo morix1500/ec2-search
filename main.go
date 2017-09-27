@@ -17,10 +17,9 @@ type CLI struct {
 	outStream, errStream io.Writer
 }
 
-
 const (
 	output_header string = "Name\tInstanceID\tInstanceType\tPrivateIP\tPublicIP\tPublicDNSName\tLaunchTime"
-	app_name = "ec2-search"
+	app_name             = "ec2-search"
 )
 
 const (
@@ -29,7 +28,7 @@ const (
 )
 
 func (c *CLI) outputError(msg string) {
-	fmt.Fprintln(c.errStream, app_name + " : " + msg)
+	fmt.Fprintln(c.errStream, app_name+" : "+msg)
 }
 
 func generateInstanceFilterByName(name string) *ec2.DescribeInstancesInput {
@@ -80,18 +79,18 @@ func (c *CLI) getInstances(filter ec2.DescribeInstancesInput, region string, pro
 	var conf *aws.Config
 	if profile != "" {
 		cred := credentials.NewSharedCredentials("", profile)
-		conf = &aws.Config {
+		conf = &aws.Config{
 			Credentials: cred,
 			Region:      &region,
 		}
 	} else {
-		conf = &aws.Config {
-			Region:      &region,
+		conf = &aws.Config{
+			Region: &region,
 		}
 	}
 	sess, err := session.NewSession(conf)
 	if err != nil {
-		c.outputError("Invalid credential.["+ profile +"]")
+		c.outputError("Invalid credential.[" + profile + "]")
 		return nil
 	}
 
@@ -99,7 +98,7 @@ func (c *CLI) getInstances(filter ec2.DescribeInstancesInput, region string, pro
 
 	res, err := svc.DescribeInstances(&filter)
 	if err != nil {
-		c.outputError("Unauthorized EC2 DescribeInstances.["+ profile +"]")
+		c.outputError("Unauthorized EC2 DescribeInstances.[" + profile + "]")
 		return nil
 	}
 
@@ -139,6 +138,7 @@ func (c *CLI) Run(args []string) int {
 	var id string
 	var region string
 	var config string
+	var version bool
 
 	flags := flag.NewFlagSet("ec2-search", flag.ContinueOnError)
 	flags.SetOutput(c.errStream)
@@ -148,9 +148,15 @@ func (c *CLI) Run(args []string) int {
 	flags.StringVar(&id, "id", "", "Specify instance id.")
 	flags.StringVar(&region, "region", "ap-northeast-1", "Specify region.")
 	flags.StringVar(&config, "config", "~/.aws/credentials", "Specify aws credential file path.")
+	flags.BoolVar(&version, "v", false, "Output version number.")
 
 	if err := flags.Parse(args[1:]); err != nil {
 		return ExitCodeErr
+	}
+
+	if version {
+		fmt.Fprintln(c.outStream, Version)
+		return 0
 	}
 
 	var filter ec2.DescribeInstancesInput
