@@ -66,6 +66,7 @@ Usage of ec2-search:
         Specify instance private ip.
   -region string
         Specify region. (default "ap-northeast-1")
+  -v    Output version number.
 ```
 
 ### option: config
