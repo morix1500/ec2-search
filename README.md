@@ -93,6 +93,13 @@ $ ec2-search --name fuga-* | ruler -t tsv
 $ go get -u github.com/morix1500/ec2-search 
 ```
 
+or
+
+```
+$ wget https://github.com/morix1500/ec2-search/releases/download/v0.1.0/ec2-search_linux_amd64 -O /usr/local/bin/ec2-search
+$ chmod u+x /usr/local/bin/ec2-search
+```
+
 ## License
 Please see the [LICENSE](./LICENSE) file for details.  
 
