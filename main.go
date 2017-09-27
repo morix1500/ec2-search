@@ -119,13 +119,23 @@ func format(ins *ec2.Instance) string {
 		}
 	}
 
+	var eip string
+	var public_dns string
+
+	if ins.PublicIpAddress != nil {
+		eip = *ins.PublicIpAddress
+	}
+	if ins.PublicDnsName != nil {
+		public_dns = *ins.PublicDnsName
+	}
+
 	res := []string{
 		name,
 		*ins.InstanceId,
 		*ins.InstanceType,
 		*ins.PrivateIpAddress,
-		*ins.PublicIpAddress,
-		*ins.PublicDnsName,
+		eip,
+		public_dns,
 		(*ins.LaunchTime).Format("2006-01-02 15:04:05"),
 	}
 	return strings.Join(res[:], "\t")
